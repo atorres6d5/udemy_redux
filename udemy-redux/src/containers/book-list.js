@@ -1,22 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 class BookList extends Component {
-
-  render() {
-
-    renderList = ( )=>{
-      return this.props.books.map(book=>{
-        return<li key={book.title} className="list-group-item">{book.title}</li>
-      })
+  renderList() {
+    console.log(this.props);
+      return this.props.books.map(book => {
+        return (
+          <li
+            key={book.title}
+            // onClick={() => this.props.selectBook(book)}
+            className="list-group-item"
+          >
+            {book.title}
+          </li>
+        );
+      });
     }
 
-    return (
-      <ul className="list-group col-sm-4">
-        {this.renderList()}
-      </ul>
-    );
-  }
+    render (){
+      return(
+        <ul className="list-group col-sm-4">
+           {this.renderList()}
+        </ul>
+      )
+   }
+
 
 }
 
-export default BookList;
+function mapStateToProps(state){
+  //whatever gets returned from here will show up  porps
+  //inside BookList
+  return{
+    books:state.books
+  }
+}
+
+
+export default connect(mapStateToProps)(BookList);
